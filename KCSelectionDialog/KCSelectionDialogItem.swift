@@ -10,6 +10,7 @@ import UIKit
 
 public class KCSelectionDialogItem: NSObject {
     var icon: UIImage?
+    var itemFont: UIFont?
     var itemTitle: String
     var handler: (() -> Void)?
     
@@ -31,6 +32,13 @@ public class KCSelectionDialogItem: NSObject {
         self.itemTitle = itemTitle
         self.icon = icon
         self.handler = didTapHandler
+    }
+    
+    public init(item itemTitle: String, itemFont: UIFont, icon: UIImage, didTapHandler: (() -> Void)) {
+        self.itemTitle = itemTitle
+        self.icon = icon
+        self.handler = didTapHandler
+        self.itemFont = itemFont
     }
     
     func handlerTap() {
