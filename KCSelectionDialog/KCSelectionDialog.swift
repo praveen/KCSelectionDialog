@@ -21,6 +21,8 @@ public class KCSelectionDialog: UIView {
     
     public var title: String? = "Title"
     public var titleFont: UIFont?
+    public var textColor: UIColor?
+    public var dialogColor: UIColor?
     public var closeButtonTitle: String? = "Close"
     public var closeButtonColor: UIColor?
     public var closeButtonColorHighlighted: UIColor?
@@ -32,10 +34,12 @@ public class KCSelectionDialog: UIView {
         setObservers()
     }
     
-    public init(title: String, titleFont: UIFont, cancelString: String) {
+    public init(title: String, titleFont: UIFont, cancelString: String, dialogColor: UIColor, textColor: UIColor) {
         self.title = title
         self.closeButtonTitle = cancelString
         self.titleFont = titleFont
+        self.textColor = textColor
+        self.dialogColor = dialogColor
         super.init(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
         setObservers()
     }
@@ -135,6 +139,7 @@ public class KCSelectionDialog: UIView {
         view.layer.shadowRadius = cornerRadius
         view.layer.shadowOpacity = 0.2
         view.layer.shadowColor = UIColor.blackColor().CGColor
+        view.backgroundColor = dialogColor
         
         view.layer.shouldRasterize = true
         view.layer.rasterizationScale = UIScreen.mainScreen().scale
@@ -156,7 +161,7 @@ public class KCSelectionDialog: UIView {
             let itemButton = UIButton(frame: CGRectMake(0, CGFloat(index*50), 300, 50))
             let itemTitleLabel = UILabel(frame: CGRectMake(itemPadding, 0, 255, 50))
             itemTitleLabel.text = item.itemTitle
-            itemTitleLabel.textColor = UIColor.blackColor()
+            itemTitleLabel.textColor = textColor
             if let font = item.itemFont {
                 itemTitleLabel.font = font
             }
@@ -186,6 +191,7 @@ public class KCSelectionDialog: UIView {
         view.text = title
         view.textAlignment = .Center
         view.font = titleFont
+        view.textColor = textColor
         
         let bottomLayer = CALayer()
         bottomLayer.frame = CGRectMake(0, view.bounds.size.height, view.bounds.size.width, 0.5)
@@ -200,9 +206,10 @@ public class KCSelectionDialog: UIView {
         
         button.addTarget(self, action: "close", forControlEvents: UIControlEvents.TouchUpInside)
         
-        let colorNormal = closeButtonColor != nil ? closeButtonColor : button.tintColor
+        let colorNormal = textColor
         let colorHighlighted = closeButtonColorHighlighted != nil ? closeButtonColorHighlighted : colorNormal?.colorWithAlphaComponent(0.5)
         
+        button.titleLabel?.font = titleFont
         button.setTitle(closeButtonTitle, forState: UIControlState.Normal)
         button.setTitleColor(colorNormal, forState: UIControlState.Normal)
         button.setTitleColor(colorHighlighted, forState: UIControlState.Highlighted)
@@ -252,10 +259,11 @@ public class KCSelectionDialog: UIView {
             (screenSize.height - dialogSize.height) / 2,
             dialogSize.width,
             dialogSize.height
-            )
+        )
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
 }
+
