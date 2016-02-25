@@ -20,8 +20,7 @@ public class KCSelectionDialog: UIView {
     public var motionEffectExtent: Int = 10
     
     public var title: String? = "Title"
-    public var titleFont: Font?
-    public var backgroundColor: UIColor?
+    public var titleFont: UIFont?
     public var closeButtonTitle: String? = "Close"
     public var closeButtonColor: UIColor?
     public var closeButtonColorHighlighted: UIColor?
@@ -33,11 +32,10 @@ public class KCSelectionDialog: UIView {
         setObservers()
     }
     
-    public init(title: String, titleFont: Font, backgroundColor: UIColor, cancelString: String) {
+    public init(title: String, titleFont: UIFont, cancelString: String) {
         self.title = title
         self.closeButtonTitle = cancelString
         self.titleFont = titleFont
-        self.backgroundColor = backgroundColor
         super.init(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
         setObservers()
     }
@@ -137,7 +135,6 @@ public class KCSelectionDialog: UIView {
         view.layer.shadowRadius = cornerRadius
         view.layer.shadowOpacity = 0.2
         view.layer.shadowColor = UIColor.blackColor().CGColor
-        view.backgroundColor = backgroundColor
         
         view.layer.shouldRasterize = true
         view.layer.rasterizationScale = UIScreen.mainScreen().scale
